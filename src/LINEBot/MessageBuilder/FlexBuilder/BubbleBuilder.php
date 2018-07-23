@@ -24,6 +24,11 @@ class BubbleBuilder implements FlexBuilder
     /** @var array  */
     protected $sections = ['header', 'hero', 'body', 'footer'];
 
+    public static function create()
+    {
+        return new static();
+    }
+
     /**
      * @param HeaderBuilder $headerBuilder
      * @return $this
@@ -111,8 +116,10 @@ class BubbleBuilder implements FlexBuilder
         ];
 
         foreach ($this->sections as $section) {
-            if ($this->{$section}) {
-                $this->template[$section] = $this->{$section}->build();
+            $builder = $section . "Builder";
+
+            if ($this->{$builder}) {
+                $this->template[$section] = $this->{$builder}->build();
             }
         }
 

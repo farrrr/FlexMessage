@@ -5,28 +5,20 @@ namespace FarLab\LINEBot\MessageBuilder\FlexBuilder;
 use FarLab\LINEBot\Constant\FlexComponentType;
 use FarLab\LINEBot\MessageBuilder\FlexBuilder;
 
-class BoxBuilder implements FlexBuilder
+class CarouselBuilder implements FlexBuilder
 {
-    /** @var string */
-    protected $layout;
-    /** @var array  */
-    protected $optionalProps;
     /** @var FlexBuilder[] */
     protected $contentBuilders;
     /** @var array */
     protected $template;
 
     /**
-     * BoxBuilder constructor.
+     * CarouselBuilder constructor.
      *
-     * @param       $layout
      * @param array $contentBuilders
-     * @param array $optionalProps
      */
-    public function __construct($layout, array $contentBuilders = [], array $optionalProps = [])
+    public function __construct(array $contentBuilders = [])
     {
-        $this->layout = $layout;
-        $this->optionalProps = $optionalProps;
         $this->contentBuilders = $contentBuilders;
     }
 
@@ -36,12 +28,12 @@ class BoxBuilder implements FlexBuilder
     }
 
     /**
-     * @param FlexBuilder $contentBuilder
+     * @param FlexBuilder $containBuilder
      * @return $this
      */
-    public function add(FlexBuilder $contentBuilder)
+    public function add(FlexBuilder $containBuilder)
     {
-        $this->contentBuilders[] = $contentBuilder;
+        $this->contentBuilders[] = $containBuilder;
 
         return $this;
     }
@@ -49,7 +41,7 @@ class BoxBuilder implements FlexBuilder
     /**
      * Builds flex message structure.
      *
-     * @return array Built flex message structure
+     * @return array Bulit flex message structure
      */
     public function build()
     {
@@ -63,12 +55,13 @@ class BoxBuilder implements FlexBuilder
             $contents[] = $contentBuilder->build();
         }
 
-        $this->template =  array_merge_recursive($this->optionalProps, [
-            'type' => FlexComponentType::BOX,
-            'layout' => $this->layout,
-            'contents' => $contents
-        ]);
+        $this->template = [
+            'type' => FlexComponentType::CAROUSEL,
+            'contents' => $contents,
+        ];
 
         return $this->template;
     }
+
+
 }

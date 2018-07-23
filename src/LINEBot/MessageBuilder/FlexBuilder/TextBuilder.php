@@ -38,6 +38,8 @@ class TextBuilder implements FlexBuilder
     public function setAction(TemplateActionBuilder $actionBuilder)
     {
         $this->actionBuilder = $actionBuilder;
+
+        return $this;
     }
 
     /**

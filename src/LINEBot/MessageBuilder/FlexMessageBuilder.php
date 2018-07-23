@@ -14,9 +14,11 @@ class FlexMessageBuilder implements MessageBuilder
 {
 
     /** @var string */
-    protected $altText;
+    private $altText;
     /** @var FlexBuilder */
-    protected $container;
+    private $container;
+
+
 
     /**
      * FlexMessageBuilder constructor.
@@ -43,9 +45,11 @@ class FlexMessageBuilder implements MessageBuilder
     public function buildMessage()
     {
         return [
-            'type' => MessageType::FLEX,
-            'altText' => $this->altText,
-            'contents' => $this->container->build(),
+            [
+                'type' => MessageType::FLEX,
+                'altText' => $this->altText,
+                'contents' => $this->container->build(),
+            ]
         ];
     }
 }
